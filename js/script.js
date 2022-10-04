@@ -89,11 +89,11 @@ window.addEventListener('DOMContentLoaded', function() {
     
         for (let i in more) {
 
-            more[i].addEventListener('click', function() {
-                overlay.style.display = 'block';
-                this.classList.add('more-splash');
-                document.body.style.overflow = 'hidden';
-            });
+            // more[i].addEventListener('click', function() {
+            //     overlay.style.display = 'block';
+            //     this.classList.add('more-splash');
+            //     document.body.style.overflow = 'hidden';
+            // });
         
         close.addEventListener('click', function() {
             overlay.style.display = 'none';
@@ -120,6 +120,53 @@ window.addEventListener('DOMContentLoaded', function() {
         event.preventDefault();
        
     });
+
+    // Slider
+
+    const wrapContainer = document.querySelector('.wrap-container'),
+          next = document.querySelector('.next'),
+          prev = document.querySelector('.prev'),
+          sliderDots = document.querySelectorAll('.dot');
+
+    let offset = 0;
+
+
+        next.addEventListener('click', () => {
+            offset = offset - 100
+            toChangeDots()
+                if (offset < -300) {
+                    offset = 0
+                }
+            wrapContainer.style.left = offset + '%'
+        })
+
+        prev.addEventListener('click', () => {
+            offset = offset + 100
+            toChangeDots()
+            if (offset >= 0) {
+                offset = 0
+            } 
+            wrapContainer.style.left = offset + '%'
+        })
+
+        const toChangeDots = () => {
+            sliderDots.forEach((item) => {
+                item.classList.remove('dot-active')
+                if (offset == -100) {
+                    sliderDots[1].classList.add('dot-active')
+                } else if (offset == -200) {
+                    sliderDots[2].classList.add('dot-active')
+                } else if (offset == -300) {
+                    sliderDots[3].classList.add('dot-active')
+                }
+
+                if (offset < -300 || offset == 0) {
+                    sliderDots[0].classList.add('dot-active')
+                    offset = 0
+                }
+            })
+        }
+
 });
 
 
